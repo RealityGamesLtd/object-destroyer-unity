@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "displayName": "Object Destroyer",
   "description": "Custom tool to destroy objects in more optimized way",
-  "unity": "2020.3.31f1",
+  "unity": "2020.3",
   "keywords": [
     "destroy"
   ],

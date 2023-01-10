@@ -7,6 +7,7 @@ namespace ObjectDestroyer
     {
         private float timestampOffset;
         private int deleteAmount;
+        private bool isLogging;
         private float timer = 0f;
 
         internal List<Object> ToDestroy { get; } = new List<Object>();
@@ -17,10 +18,11 @@ namespace ObjectDestroyer
             if(ToDestroy.Contains(obj)) ToDestroy.Remove(obj);
         }
 
-        internal void Initialize(float offset, int amount)
+        internal void Initialize(float offset, int amount, bool logger)
         {
             timestampOffset = offset;
             deleteAmount = amount;
+            isLogging = logger;
         }
 
         private void Update()
@@ -35,6 +37,9 @@ namespace ObjectDestroyer
 
         private void Wipe()
         {
+            long beforeBytes = 0;
+            if (isLogging) beforeBytes = System.GC.GetTotalMemory(false);
+
             for(int i = 0; i < deleteAmount; ++i)
             {
                 if(i < ToDestroy.Count)
@@ -43,6 +48,14 @@ namespace ObjectDestroyer
                     ToDestroy.Remove(obj);
                     if (obj != null) Destroy(obj);
                 }
+            }
+
+            System.GC.Collect();
+
+            if (isLogging)
+            {
+                var afterBytes = System.GC.GetTotalMemory(false);
+                Debug.LogWarning($"Wiping from memory: {beforeBytes - afterBytes} bytes");
             }
         }
     }

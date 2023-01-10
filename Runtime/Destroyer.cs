@@ -37,11 +37,11 @@ namespace ObjectDestroyer
             wiper = go.AddComponent<Wiper>();
 
             var config = Resources.Load<WiperConfig>("WiperConfig");
-            if (config != null) wiper.Initialize(config.TimestampOffset, config.DeleteAmount);
+            if (config != null) wiper.Initialize(config.TimestampOffset, config.DeleteAmount, config.IsLogging);
             else
             {
                 Debug.LogError("No config for object destroyer! Initializing with default values!");
-                wiper.Initialize(TIMESTAMP_OFFSET, DELETE_AMOUNT);
+                wiper.Initialize(TIMESTAMP_OFFSET, DELETE_AMOUNT, false);
             }
         }
     }

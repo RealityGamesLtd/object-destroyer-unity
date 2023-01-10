@@ -7,5 +7,6 @@ namespace ObjectDestroyer
     {
         public float TimestampOffset;
         public int DeleteAmount;
+        public bool IsLogging;
     }
 }

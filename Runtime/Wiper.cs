@@ -37,6 +37,9 @@ namespace ObjectDestroyer
 
         private void Wipe()
         {
+            if (ToDestroy.Count <= 0)
+                return;
+
             long beforeBytes = 0;
             if (isLogging) beforeBytes = System.GC.GetTotalMemory(false);
 
@@ -55,7 +58,7 @@ namespace ObjectDestroyer
             if (isLogging)
             {
                 var afterBytes = System.GC.GetTotalMemory(false);
-                Debug.LogWarning($"Wiping from memory: {beforeBytes - afterBytes} bytes");
+                Debug.Log($"Wiping from memory: {beforeBytes - afterBytes} bytes");
             }
         }
     }
